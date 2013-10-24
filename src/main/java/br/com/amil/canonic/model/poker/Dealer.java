@@ -1,13 +1,15 @@
 package br.com.amil.canonic.model.poker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Dealer {
+public class Dealer implements Serializable {
 	
-    
-    public static class Build {
+	private static final long serialVersionUID = -2232102864755639533L;
+
+	public static class Build {
     	
     	public Build embaralhar(Baralho baralho) {
     		baralho.getCartas();

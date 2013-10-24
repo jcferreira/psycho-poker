@@ -8,7 +8,7 @@ import lombok.Getter;
 
 public @Getter class Baralho implements Serializable {
 
-	private static final long serialVersionUID = 167523458628478234L;
+	private static final long serialVersionUID = 4727295656949573944L;
 
 	private List<Carta> cartas;
 	

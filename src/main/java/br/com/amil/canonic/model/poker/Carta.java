@@ -6,8 +6,7 @@ import lombok.Data;
 
 public @Data class Carta implements Serializable {
 
-	private static final long serialVersionUID = 2378489237834723L;
-	
+	private static final long serialVersionUID = -4850867306399190460L;
 	
 	public Carta(String valor, String naipe) {
 		this.valor = valor;
