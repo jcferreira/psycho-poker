@@ -10,12 +10,12 @@ public class PokerEngine implements Serializable {
 	private final Integer SEQUENCIA_DEFAULT = 5;
 	
 	
-	public Jogada jogar (List<Carta> cartasMao, Baralho baralho) {
+	public Jogada jogar (Deque deque, Baralho baralho) {
 		
-		return this.jogar(cartasMao, baralho.getCartas(), SEQUENCIA_DEFAULT);
+		return this.jogar(deque, baralho.getCartas(), SEQUENCIA_DEFAULT);
 	}
 	
-	public Jogada jogar (List<Carta> cartasMao, List<Carta> cartaBaralho, Integer sequencia) {
+	public Jogada jogar (Deque deque, List<Carta> cartaBaralho, Integer sequencia) {
 		
 		
 		return Jogada.FLUSH;

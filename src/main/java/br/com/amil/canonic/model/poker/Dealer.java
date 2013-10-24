@@ -10,21 +10,21 @@ public class Dealer implements Serializable {
 	private static final long serialVersionUID = -2232102864755639533L;
 
 	public static class Build {
+		
     	
     	public Build embaralhar(Baralho baralho) {
-    		baralho.getCartas();
     		Collections.shuffle(baralho.getCartas());
     		return this;
     	}
     	
-    	public List<Carta> darCartas(Baralho baralho) {
+    	public Deque darCartas(Baralho baralho) {
     		List<Carta> cartasMao = new ArrayList<Carta>();
     		for(int ordemDaCarta = 0 ; ordemDaCarta < 5 ; ordemDaCarta++) {
     			cartasMao.add(baralho.getCartas().get(ordemDaCarta));
     			baralho.getCartas().remove(ordemDaCarta);
     		}
     		
-    		return cartasMao;
+    		return new Deque(cartasMao);
     	}
     }
     

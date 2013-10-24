@@ -7,8 +7,8 @@ import lombok.Getter;
 public @Getter enum Jogada implements Serializable{
 	
 	STRAIGHT_FLUSH (1, "Sequência numérica e de naipe"),
-	FOUR_OF_A_KING (2, "Quadra"),
-	FULL_HOUSE (3, "Trinca + par"),
+	FOUR_OF_A_KING (2, "Quadra numérica"),
+	FULL_HOUSE (3, "Trinca numérica + par numérico"),
 	FLUSH (4, "Sequência de naipe"),
 	STRAIGHT (5, "Sequência numérica"),
 	THREE_OF_A_KIND (6, "Trinca"),

@@ -27,6 +27,7 @@ public @Getter class Baralho implements Serializable {
     
     private void montarBaralho() {
     	this.cartas = new ArrayList<Carta>();
+    	/*
     	for(int valor=2; valor<=10; valor++) {
     		this.cartas.add(new Carta(Integer.toString(valor), "C"));
     		this.cartas.add(new Carta(Integer.toString(valor), "D"));
@@ -52,6 +53,14 @@ public @Getter class Baralho implements Serializable {
     	this.cartas.add(new Carta("K", "D"));
     	this.cartas.add(new Carta("K", "S"));
     	this.cartas.add(new Carta("K", "H"));
+    	*/
+    	
+    	
+    	for(CartaValor valor : CartaValor.values()) {
+    		for(CartaNaipe naipe : CartaNaipe.values()) {
+    			this.cartas.add(new Carta(valor, naipe));
+    		}
+    	}
     }
     
     
