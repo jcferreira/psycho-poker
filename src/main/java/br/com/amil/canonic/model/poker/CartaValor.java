@@ -15,10 +15,10 @@ public @Getter enum CartaValor implements Serializable{
 	SETE (7, "7"),
 	OITO (8, "8"),
 	NOVE (9, "9"),
-	DEZ (10, "10"),
+	DEZ (10, "T"),
 	VALETE (11, "J"),
 	DAMA (12, "Q"),
-	REIS (13, "K");
+	REI (13, "K");
 
 	
 	private Integer ordem;

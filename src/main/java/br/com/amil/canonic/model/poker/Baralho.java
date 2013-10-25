@@ -15,9 +15,14 @@ public @Getter class Baralho implements Serializable {
     public Baralho() {
     	this.montarBaralho();
 	}
-    
-    
-    
+
+    public List<Carta> olharCartas(int quantidadeCartas) {
+    	List<Carta> olharCartas = new ArrayList<Carta>();
+    	for(int i=0 ; i < quantidadeCartas ; i++) {
+    		olharCartas.add(cartas.get(i));
+    	}
+    	return olharCartas;
+    }
     
     private void montarBaralho() {
     	this.cartas = new ArrayList<Carta>();
@@ -27,7 +32,6 @@ public @Getter class Baralho implements Serializable {
     		}
     	}
     }
-    
     
     
     
