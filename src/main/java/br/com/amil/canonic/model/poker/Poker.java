@@ -20,7 +20,7 @@ public class Poker {
 		
 		
 		
-		
+		imprimir(mesa);
 	}
 	
 	private static void imprimir(Mesa mesa) {
