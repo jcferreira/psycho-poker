@@ -1,5 +1,7 @@
 package br.com.amil.canonic.model.poker;
 
+import org.apache.commons.lang.StringUtils;
+
 
 public class Poker {
 
@@ -9,13 +11,27 @@ public class Poker {
 	public static void main(String[] args) {
 		
 		Baralho baralho = new Baralho();
-		baralho.abrirCartasNaMesa();
-		Deque deque = new Dealer.Build().embaralhar(baralho).darCartas(baralho);
 		
-		//new Dealer.Build().embaralhar(baralho);
-		//baralho.abrirCartasNaMesa();
+		Mesa mesa = new Dealer.Build().embaralhar(baralho).darCartas(baralho);
+		
+
+		PokerEngine engine = new PokerEngine();
+		engine.abrirCartasNaMesa(mesa);
 		
 		
+		
+		
+	}
+	
+	private static void imprimir(Mesa mesa) {
+		System.out.println("#####################################");
+		
+		PokerEngine engine = new PokerEngine();
+		System.out.println("Cartas: " + StringUtils.join(mesa.getMao().getCartas(), " "));
+		engine.orderCartasPorValor(mesa.getMao().getCartas());
+		System.out.println("Cartas Ordenadas: " + StringUtils.join(mesa.getMao().getCartas(), " "));
+		
+		System.out.println("#####################################");
 	}
 
 }

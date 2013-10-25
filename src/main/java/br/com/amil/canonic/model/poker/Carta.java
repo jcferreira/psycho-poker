@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import lombok.Data;
 
-public @Data class Carta implements Serializable {
+public @Data class Carta implements Serializable, Comparable<Carta> {
 
 	private static final long serialVersionUID = -4850867306399190460L;
 	
@@ -20,5 +20,10 @@ public @Data class Carta implements Serializable {
 	@Override
 	public String toString() {
 		return valor.toString() + naipe.toString();
+	}
+
+	@Override
+	public int compareTo(Carta carta) {
+		return this.valor.getOrdem().compareTo(carta.getValor().getOrdem());
 	}
 }

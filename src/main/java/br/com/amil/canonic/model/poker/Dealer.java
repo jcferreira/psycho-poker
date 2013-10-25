@@ -17,14 +17,14 @@ public class Dealer implements Serializable {
     		return this;
     	}
     	
-    	public Deque darCartas(Baralho baralho) {
+    	public Mesa darCartas(Baralho baralho) {
     		List<Carta> cartasMao = new ArrayList<Carta>();
     		for(int ordemDaCarta = 0 ; ordemDaCarta < 5 ; ordemDaCarta++) {
     			cartasMao.add(baralho.getCartas().get(ordemDaCarta));
     			baralho.getCartas().remove(ordemDaCarta);
     		}
     		
-    		return new Deque(cartasMao);
+    		return new Mesa(new Mao(cartasMao), baralho);
     	}
     }
     
