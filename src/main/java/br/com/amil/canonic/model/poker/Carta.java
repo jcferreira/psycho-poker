@@ -1,6 +1,9 @@
 package br.com.amil.canonic.model.poker;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,6 +19,7 @@ public @Data class Carta implements Serializable, Comparable<Carta> {
 		this.valor = valor;
 		this.naipe = naipe;
 	}
+	
 
 	@Override
 	public String toString() {

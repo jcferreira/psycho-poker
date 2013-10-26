@@ -2,6 +2,7 @@ package br.com.amil.canonic.model.poker;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import lombok.Getter;
@@ -33,7 +34,18 @@ public @Getter class Baralho implements Serializable {
     	}
     }
     
-    
+	public List<Carta> getCartaFromString(List<String> cartasStr) {
+		List<Carta> cartas = new ArrayList<Carta>();
+		
+		for(String linhaCartas : cartasStr) {
+			List<String> listaCartasStr = Arrays.asList(linhaCartas.split("-"));
+			for(String cartaStr :  listaCartasStr) {
+				cartas.add(new Carta(CartaValor.fromCarta(cartaStr), CartaNaipe.fromCarta(cartaStr)));
+			}
+		}
+		
+		return cartas;
+	}
     
     
 }

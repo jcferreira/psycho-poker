@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import lombok.Getter;
 
-public @Getter enum Jogada implements Serializable{
+public @Getter enum Jogada implements Serializable {
 	
 	STRAIGHT_FLUSH (1, "Sequência numérica e de naipe"),
 	FOUR_OF_A_KING (2, "Quadra numérica"),
@@ -14,7 +14,8 @@ public @Getter enum Jogada implements Serializable{
 	THREE_OF_A_KIND (6, "Trinca"),
 	TWO_PAIRS (7, "Dois pares"),
 	ONE_PAIR (8, "Um Par"),
-	HIGHEST_CARD (9, "Maior Carta");
+	HIGHEST_CARD (9, "Maior Carta"),
+	MAO (10,"Mão");
 	  
 	
 	private Integer ordemMelhorJogada;
@@ -24,7 +25,10 @@ public @Getter enum Jogada implements Serializable{
 		this.ordemMelhorJogada = ordemMelhorJogada;
 		this.descricao = descricao;
 	}
-	
+
+	public static Jogada fromValue(String jogada) {
+        return valueOf(jogada);
+    }
 	
 
 }

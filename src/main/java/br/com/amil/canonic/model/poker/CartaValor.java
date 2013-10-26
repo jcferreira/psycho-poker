@@ -1,6 +1,8 @@
 package br.com.amil.canonic.model.poker;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.Getter;
 
@@ -23,16 +25,29 @@ public @Getter enum CartaValor implements Serializable{
 	
 	private Integer ordem;
 	private String valorExibicao;
+
+	private static Map<String, CartaValor> valorByChave = new HashMap<String, CartaValor>();
+	
+	static {
+        for (CartaValor valor : CartaValor.values()) {
+        	valorByChave.put(valor.getValorExibicao(), valor);
+        }
+    }
 	
 	CartaValor(Integer ordem, String valorExibicao) {
 		this.ordem = ordem;
 		this.valorExibicao = valorExibicao;
 	}
 	
+	public static CartaValor fromCarta(String cartaStr) {
+		return valorByChave.get(cartaStr);
+	}
+
 	@Override
 	public String toString() {
 		return this.valorExibicao;
 	}
+	
 
 }
 

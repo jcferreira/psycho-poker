@@ -14,13 +14,13 @@ public class Poker {
 		
 		Mesa mesa = new Dealer.Build().embaralhar(baralho).darCartas(baralho);
 		
-		imprimir(mesa);
+		//imprimir(mesa);
 
 		
 		PokerEngine engine = new PokerEngine(mesa);
 		//engine.abrirCartasNaMesa();
 		
-		
+		engine.jogar();
 		
 		
 		
