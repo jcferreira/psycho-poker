@@ -3,6 +3,8 @@ package br.com.amil.canonic.model.poker;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import lombok.Getter;
 
 public @Getter class Mao implements Serializable {
@@ -16,5 +18,9 @@ public @Getter class Mao implements Serializable {
 		this.cartas = cartas;
 	}
 	
+	@Override
+	public String toString() {
+		return StringUtils.join(cartas, " ");
+	}
 	
 }

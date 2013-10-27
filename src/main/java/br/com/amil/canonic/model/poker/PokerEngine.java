@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -65,35 +68,149 @@ private int count = 0;
 
 	private void verificarJogadas(List<Carta> cartas) {
 		
-System.out.println("######======>>>>>  " + count++ + "   |   " + StringUtils.join(cartas, " - "));
+//System.out.println("######======>>>>>  " + count++ + "   |   " + StringUtils.join(cartas, " - "));
 		
 		straightFlush(cartas);
-		fourOfAKing();
+		fourOfAKing(cartas);
+		fullHouse(cartas);
+		flush(cartas);
+		straight(cartas);
+		threeOfAKing(cartas);
+		twoPairs(cartas);
+		onePair(cartas);
 	}
 	
 	private boolean straightFlush(List<Carta> cartas) {
-		Integer sequenciaAnterior = null;
-		CartaNaipe naipe = null;
+		if(sequenciaValores(cartas) && sequenciaNaipes(cartas)) {
+			listaJogadasPossiveis.add(Jogada.STRAIGHT_FLUSH);
+			return true;
+		} else { 
+			return false;
+		}
 		
-		for(Carta mao : cartas) {
-			if(sequenciaAnterior != null && naipe !=  null) {
-				if((sequenciaAnterior+1) != mao.getValor().getOrdem()) {
-					return false;
+	}
+	
+	private void fourOfAKing(List<Carta> cartas) {
+		int quantidadeValorCartaIgual = 0;
+		for(int i=0 ; i<cartas.size()-1 ; i++) {
+			if( cartas.get(i).getValor().equals(cartas.get(i+1).getValor()) ) {
+				quantidadeValorCartaIgual++;
+			}
+		}
+		if( cartas.get(0).getValor().equals(cartas.get(cartas.size()-1).getValor()) ) 
+			quantidadeValorCartaIgual++;
+		
+		if(quantidadeValorCartaIgual == 4) {
+			listaJogadasPossiveis.add(Jogada.FOUR_OF_A_KING);
+		}
+	}
+	
+	private void fullHouse(List<Carta> cartas) {
+		Map<String, Integer> repeticao = montarCombinacoesJogadas(cartas);
+		
+		if(repeticao.size() == 2) {
+			Iterator<Integer> iterator = repeticao.values().iterator();
+			Integer primeiroGrupo = iterator.next();
+			Integer segundoGrupo = iterator.next();
+			if((primeiroGrupo == 3 && segundoGrupo == 2) || (primeiroGrupo == 2 && segundoGrupo == 3)) {
+				listaJogadasPossiveis.add(Jogada.FULL_HOUSE);
+			}
+		}
+	}
+	
+	private void flush(List<Carta> cartas) {
+		orderCartasPorValor(cartas);
+		boolean naipesIguais = true;
+		if(!sequenciaValores(cartas)) {
+			CartaNaipe naipe = null;
+			for(Carta carta : cartas) {
+				if(naipe != carta.getNaipe()) {
+					naipesIguais = false;
+					break;
 				}
-				if(naipe != mao.getNaipe()) {
+				naipe = carta.getNaipe();
+			}
+		}
+		if(naipesIguais) 
+			listaJogadasPossiveis.add(Jogada.FLUSH);
+	}
+	
+	private void straight(List<Carta> cartas) {
+		if(sequenciaValores(cartas)) 
+			listaJogadasPossiveis.add(Jogada.STRAIGHT);
+	}
+	
+	private void threeOfAKing (List<Carta> cartas) {
+		Map<String, Integer> repeticao = montarCombinacoesJogadas(cartas);
+		
+		if(repeticao.size() != 2) {
+			for(Integer grupoQtde : repeticao.values()) {
+				if(grupoQtde == 3) {
+					listaJogadasPossiveis.add(Jogada.THREE_OF_A_KIND);
+				}
+			}
+		}
+	}
+	
+	private void twoPairs (List<Carta> cartas) {
+		Map<String, Integer> repeticao = montarCombinacoesJogadas(cartas);
+
+		if(repeticao.size() == 3) {
+			listaJogadasPossiveis.add(Jogada.TWO_PAIRS);
+		}
+	}
+	
+	private void onePair (List<Carta> cartas) {
+		Map<String, Integer> repeticao = montarCombinacoesJogadas(cartas);
+
+		if(repeticao.size() == 4) {
+			listaJogadasPossiveis.add(Jogada.ONE_PAIR);
+		}
+	}	
+	
+	
+	
+	private boolean sequenciaValores (List<Carta> cartas) {
+		orderCartasPorValor(cartas);
+		Integer sequenciaAnterior = null;
+		for(Carta carta : cartas) {
+			if(sequenciaAnterior != null) {
+				if((sequenciaAnterior+1) != carta.getValor().getOrdem()) {
 					return false;
 				}
 			}
-			sequenciaAnterior = mao.getValor().getOrdem();
-			naipe = mao.getNaipe();
+			sequenciaAnterior = carta.getValor().getOrdem();
 		}
-		
-		listaJogadasPossiveis.add(Jogada.STRAIGHT_FLUSH);
 		return true;
 	}
 	
-	private void fourOfAKing() {
+	private boolean sequenciaNaipes (List<Carta> cartas) {
+		CartaNaipe naipe = null;
 		
+		for(Carta carta : cartas) {
+			if(naipe !=  null) {
+				if(naipe != carta.getNaipe()) {
+					return false;
+				}
+			}
+			naipe = carta.getNaipe();
+		}
+		return true;		
+	}
+	
+	private Map<String, Integer> montarCombinacoesJogadas (List<Carta> cartas) {
+		Map<String, Integer> repeticao = new HashMap<String, Integer>();
+		
+		for(Carta carta : cartas) {
+			if (repeticao.containsKey(carta.getValor())) {
+				Integer qtde = repeticao.get(carta.getValor());
+				repeticao.put(carta.getValor().getValorExibicao(), qtde+1);				
+			} else {
+				repeticao.put(carta.getValor().getValorExibicao(), 1);
+			}
+		}
+		
+		return repeticao;
 	}
 	
 	private Jogada melhorJogada() {
@@ -108,7 +225,7 @@ System.out.println("######======>>>>>  " + count++ + "   |   " + StringUtils.joi
 	        
 	        return Jogada.fromValue(String.valueOf(arrayJogadas[0]));
 		} else {
-			return Jogada.MAO;
+			return Jogada.HIGHEST_CARD;
 		}
 	}
 		
@@ -135,6 +252,12 @@ System.out.println("######======>>>>>  " + count++ + "   |   " + StringUtils.joi
 	
 	/*************************************************/
 	
+	
+	
+	public Set<Jogada> listarJogadasFeitas() {
+		return listaJogadasPossiveis;
+	}
+
 	
 /*
 	public static void main(String[] args) {

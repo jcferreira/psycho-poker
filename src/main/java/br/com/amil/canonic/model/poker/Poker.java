@@ -1,5 +1,7 @@
 package br.com.amil.canonic.model.poker;
 
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 
 
@@ -20,9 +22,15 @@ public class Poker {
 		PokerEngine engine = new PokerEngine(mesa);
 		//engine.abrirCartasNaMesa();
 		
-		engine.jogar();
+		Jogada melhorJogada = engine.jogar();
+		System.out.println("*********************************");
+		System.out.println("M‹o: " + mesa.getMao().getCartas() + " Monte: " + mesa.getBaralho().olharCartas(5) + " Melhor Jogo: " + melhorJogada);
+		System.out.println("*********************************");
 		
-		
+		Set<Jogada> listarJogadasFeitas = engine.listarJogadasFeitas();
+		for (Jogada jogada : listarJogadasFeitas) {
+			System.out.println(" >>>>>>> Indice: " + jogada.getOrdemMelhorJogada() + "  -  Jogada: " + jogada);
+		}
 		
 	}
 	
