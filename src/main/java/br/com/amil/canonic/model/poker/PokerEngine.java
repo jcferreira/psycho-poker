@@ -21,6 +21,8 @@ public class PokerEngine implements Serializable {
 	
 	private Mesa mesa;
 	
+private int count = 0;
+	
 	public PokerEngine(Mesa mesa) {
 		this.orderCartasPorValor(mesa.getMao().getCartas());
 		this.mesa = mesa;
@@ -43,8 +45,18 @@ public class PokerEngine implements Serializable {
 		for(int quantidadeCartasOlhadasBaralho=1 ; quantidadeCartasOlhadasBaralho <= QUANTIDADE_MAXIMA_CARTAS_A_TROCAR ; quantidadeCartasOlhadasBaralho++ ) {
 			List<String> combinacoesCartas = new ArrayList<String>();
 			List<Carta> cartasOlhadas = this.mesa.getBaralho().olharCartas(quantidadeCartasOlhadasBaralho);
-			montarCombinacao(cartasMao, 0, cartasOlhadas.size(), 0, QUANTIDADE_MAXIMA_CARTAS_A_TROCAR-cartasOlhadas.size(), new Carta[QUANTIDADE_MAXIMA_CARTAS_A_TROCAR-cartasOlhadas.size()], combinacoesCartas);
-			this.verificarJogadas(this.mesa.getBaralho().getCartaFromString(combinacoesCartas));
+			if(quantidadeCartasOlhadasBaralho < QUANTIDADE_MAXIMA_CARTAS_A_TROCAR) {
+				montarCombinacao(cartasMao, 0, cartasOlhadas.size(), 0, QUANTIDADE_MAXIMA_CARTAS_A_TROCAR-cartasOlhadas.size(), new Carta[QUANTIDADE_MAXIMA_CARTAS_A_TROCAR-cartasOlhadas.size()], combinacoesCartas);
+				List<List<Carta>> listaCartas = this.mesa.getBaralho().getCartaFromString(combinacoesCartas);
+				for(List<Carta> cartas : listaCartas) {
+					cartas.addAll(cartasOlhadas);
+					this.verificarJogadas(cartas);
+				}
+			} else {
+				this.verificarJogadas(cartasOlhadas);
+			}
+			
+			//this.verificarJogadas(this.mesa.getBaralho().getCartaFromString(combinacoesCartas));
 		}
 		
 		return this.melhorJogada();
@@ -52,6 +64,9 @@ public class PokerEngine implements Serializable {
 	
 
 	private void verificarJogadas(List<Carta> cartas) {
+		
+System.out.println("######======>>>>>  " + count++ + "   |   " + StringUtils.join(cartas, " - "));
+		
 		straightFlush(cartas);
 		fourOfAKing();
 	}
@@ -60,7 +75,7 @@ public class PokerEngine implements Serializable {
 		Integer sequenciaAnterior = null;
 		CartaNaipe naipe = null;
 		
-		for(Carta mao : this.mesa.getMao().getCartas()) {
+		for(Carta mao : cartas) {
 			if(sequenciaAnterior != null && naipe !=  null) {
 				if((sequenciaAnterior+1) != mao.getValor().getOrdem()) {
 					return false;
@@ -99,13 +114,13 @@ public class PokerEngine implements Serializable {
 		
 	private void montarCombinacao(List<Carta> cartasCombinacao, int inicio, int fim, int indiceCartaTrocada, int qtdeCartasRevezando, Carta[] resultado, List<String> listaCartas) {
 	    if ( (indiceCartaTrocada + 1) >= qtdeCartasRevezando) {  
-	        for(int i = inicio; i <= fim; i++){  
+	        for(int i = inicio; i <= fim; i++) {  
 	            resultado[indiceCartaTrocada] = cartasCombinacao.get(i);
 	            listaCartas.add(StringUtils.join(resultado, "-"));
 	            //System.out.println(StringUtils.join(resultado, " - ")); 
 	        }  
 	    } else {  
-	        for(int i = inicio; i <= fim; i++){  
+	        for(int i = inicio; i <= fim; i++) {  
 	            resultado[indiceCartaTrocada] = cartasCombinacao.get(i);  
 	            montarCombinacao(cartasCombinacao, i + 1, fim + 1, indiceCartaTrocada + 1, qtdeCartasRevezando, resultado, listaCartas);  
 	        }  

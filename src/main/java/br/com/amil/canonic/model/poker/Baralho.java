@@ -34,17 +34,19 @@ public @Getter class Baralho implements Serializable {
     	}
     }
     
-	public List<Carta> getCartaFromString(List<String> cartasStr) {
-		List<Carta> cartas = new ArrayList<Carta>();
+	public List<List<Carta>> getCartaFromString(List<String> cartasStr) {
+		List<List<Carta>> listaCartas = new ArrayList<List<Carta>>();
 		
 		for(String linhaCartas : cartasStr) {
+			List<Carta> cartas = new ArrayList<Carta>();
 			List<String> listaCartasStr = Arrays.asList(linhaCartas.split("-"));
 			for(String cartaStr :  listaCartasStr) {
 				cartas.add(new Carta(CartaValor.fromCarta(cartaStr), CartaNaipe.fromCarta(cartaStr)));
 			}
+			listaCartas.add(cartas);
 		}
 		
-		return cartas;
+		return listaCartas;
 	}
     
     

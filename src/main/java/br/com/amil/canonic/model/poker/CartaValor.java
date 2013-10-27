@@ -40,7 +40,7 @@ public @Getter enum CartaValor implements Serializable{
 	}
 	
 	public static CartaValor fromCarta(String cartaStr) {
-		return valorByChave.get(cartaStr);
+		return valorByChave.get(cartaStr.subSequence(0, 1));
 	}
 
 	@Override

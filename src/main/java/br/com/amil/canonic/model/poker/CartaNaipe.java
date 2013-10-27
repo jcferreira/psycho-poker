@@ -32,7 +32,7 @@ public @Getter enum CartaNaipe implements Serializable{
 	}
 	
 	public static CartaNaipe fromCarta(String cartaStr) {
-		return naipeByChave.get(cartaStr);
+		return naipeByChave.get(cartaStr.substring(1, 2));
 	}
 
 	@Override
