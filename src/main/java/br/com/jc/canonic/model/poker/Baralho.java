@@ -1,4 +1,4 @@
-package br.com.amil.canonic.model.poker;
+package br.com.jc.canonic.model.poker;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +17,11 @@ public @Getter class Baralho implements Serializable {
     	this.montarBaralho();
 	}
 
+    
+    public Baralho(List<Carta> cartas) {
+    	this.cartas = cartas;
+	}
+    
     public List<Carta> olharCartas(int quantidadeCartas) {
     	List<Carta> olharCartas = new ArrayList<Carta>();
     	for(int i=0 ; i < quantidadeCartas ; i++) {

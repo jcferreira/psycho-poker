@@ -1,4 +1,4 @@
-package br.com.amil.canonic.model.poker;
+package br.com.jc.canonic.model.poker;
 
 import java.io.Serializable;
 

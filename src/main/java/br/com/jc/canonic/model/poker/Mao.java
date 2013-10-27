@@ -1,11 +1,11 @@
-package br.com.amil.canonic.model.poker;
+package br.com.jc.canonic.model.poker;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import lombok.Getter;
+
+import org.apache.commons.lang.StringUtils;
 
 public @Getter class Mao implements Serializable {
 

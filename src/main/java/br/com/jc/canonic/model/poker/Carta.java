@@ -1,9 +1,6 @@
-package br.com.amil.canonic.model.poker;
+package br.com.jc.canonic.model.poker;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import lombok.Data;
 
