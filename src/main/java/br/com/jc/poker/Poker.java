@@ -1,5 +1,7 @@
 package br.com.jc.poker;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -9,6 +11,7 @@ import br.com.jc.business.poker.PokerEngine;
 import br.com.jc.canonic.model.poker.Baralho;
 import br.com.jc.canonic.model.poker.Jogada;
 import br.com.jc.canonic.model.poker.Mesa;
+import br.com.jc.leituracartas.poker.LeituraDeCartas;
 
 
 public class Poker {
@@ -18,27 +21,55 @@ public class Poker {
 	 */
 	public static void main(String[] args) {
 		
-		Baralho baralho = new Baralho();
+		//List<Mesa> mesas = obterBaralhoCompletoAleatorio();
+		List<Mesa> mesas = obterBaralhoPorLinhasDigitadas();
+		//List<Mesa> mesas = obterBaralhoPorArquivo();
 		
-		Mesa mesa = new Dealer.Build().embaralhar(baralho).darCartas(baralho);
-		
-		//imprimir(mesa);
+		for(Mesa mesa : mesas) {
+			//imprimir(mesa);
 
-		
-		PokerEngine engine = new PokerEngine(mesa);
-		//engine.abrirCartasNaMesa();
-		
-		Jogada melhorJogada = engine.jogar();
-		System.out.println("*********************************");
-		System.out.println("M‹o: " + mesa.getMao().getCartas() + " Monte: " + mesa.getBaralho().olharCartas(5) + " Melhor Jogo: " + melhorJogada);
-		System.out.println("*********************************");
-		
-		Set<Jogada> listarJogadasFeitas = engine.listarJogadasFeitas();
-		for (Jogada jogada : listarJogadasFeitas) {
-			System.out.println(" >>>>>>> Indice: " + jogada.getOrdemMelhorJogada() + "  -  Jogada: " + jogada);
+			PokerEngine engine = new PokerEngine(mesa);
+			//engine.abrirCartasNaMesa();
+			
+			Jogada melhorJogada = engine.jogar();
+			System.out.println("******************************************************************************** ");
+			System.out.println("M‹o: " + mesa.getMao().getCartas() + " Monte: " + mesa.getBaralho().olharCartas(5) + " Melhor Jogo: " + melhorJogada);
+			System.out.println("******************************************************************************** \n");
+			
+			//listarTodasJogadasEncontradas(engine.listarJogadasEncontradas());
 		}
-		
+
 	}
+	
+	
+	private static List<Mesa> obterMesasCompletoAleatorio() {
+		List<Mesa> mesas = new ArrayList<Mesa>();
+		Baralho baralho = new Baralho();
+		mesas.add(new Dealer.Build().embaralhar(baralho).darCartas(baralho));
+		return mesas;
+	}
+	
+	private static List<Mesa> obterBaralhoPorLinhasDigitadas() {
+		List<Mesa> mesas = new ArrayList<Mesa>();
+		LeituraDeCartas leituraBaralho = new LeituraDeCartas();
+		List<Baralho> baralhos = leituraBaralho.carregarPorDigitacao();
+		for(Baralho baralho : baralhos) {
+			mesas.add(new Dealer.Build().darCartas(baralho));
+		}
+		return mesas;
+	}
+	
+	private static List<Mesa> obterBaralhoPorArquivo() {
+		List<Mesa> mesas = new ArrayList<Mesa>();
+		LeituraDeCartas leituraBaralho = new LeituraDeCartas();
+		List<Baralho> baralhos = leituraBaralho.carregarPorArquivo();
+		for(Baralho baralho : baralhos) {
+			mesas.add(new Dealer.Build().darCartas(baralho));
+		}
+		return mesas;
+	}
+	
+	
 	
 	private static void imprimir(Mesa mesa) {
 		System.out.println("#####################################");
@@ -48,6 +79,12 @@ public class Poker {
 		System.out.println("Cartas Ordenadas: " + StringUtils.join(mesa.getMao().getCartas(), " "));
 		
 		System.out.println("#####################################");
+	}
+	
+	private static void listarTodasJogadasEncontradas(Set<Jogada> listarJogadasEncontradas) {
+		for (Jogada jogada : listarJogadasEncontradas) {
+			System.out.println(" >>>>>>> Indice: " + jogada.getOrdemMelhorJogada() + "  -  Jogada: " + jogada);
+		}
 	}
 
 }

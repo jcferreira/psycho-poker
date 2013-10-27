@@ -29,10 +29,9 @@ public class PokerEngine implements Serializable {
 	
 	private Mesa mesa;
 	
-private int count = 0;
-	
+
 	public PokerEngine(Mesa mesa) {
-		this.orderCartasPorValor(mesa.getMao().getCartas());
+		this.ordernarCartasPorValor(mesa.getMao().getCartas());
 		this.mesa = mesa;
 		this.listaJogadasPossiveis = new HashSet<Jogada>();
 	}
@@ -74,7 +73,8 @@ private int count = 0;
 	private void verificarJogadas(List<Carta> cartas) {
 		
 //System.out.println("######======>>>>>  " + count++ + "   |   " + StringUtils.join(cartas, " - "));
-		
+		ordernarCartasPorValor(cartas);
+
 		straightFlush(cartas);
 		fourOfAKing(cartas);
 		fullHouse(cartas);
@@ -124,7 +124,6 @@ private int count = 0;
 	}
 	
 	private void flush(List<Carta> cartas) {
-		orderCartasPorValor(cartas);
 		boolean naipesIguais = true;
 		if(!sequenciaValores(cartas)) {
 			CartaNaipe naipe = null;
@@ -176,7 +175,6 @@ private int count = 0;
 	
 	
 	private boolean sequenciaValores (List<Carta> cartas) {
-		orderCartasPorValor(cartas);
 		Integer sequenciaAnterior = null;
 		for(Carta carta : cartas) {
 			if(sequenciaAnterior != null) {
@@ -249,7 +247,7 @@ private int count = 0;
 	    }
 	}  
 	
-	private void orderCartasPorValor(List<Carta> cartas) {
+	private void ordernarCartasPorValor(List<Carta> cartas) {
 		Collections.sort(cartas);
 	}
 	
@@ -259,7 +257,7 @@ private int count = 0;
 	
 	
 	
-	public Set<Jogada> listarJogadasFeitas() {
+	public Set<Jogada> listarJogadasEncontradas() {
 		return listaJogadasPossiveis;
 	}
 
