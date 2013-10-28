@@ -25,8 +25,8 @@ public class Dealer implements Serializable {
     	public Mesa darCartas(Baralho baralho) {
     		List<Carta> cartasMao = new ArrayList<Carta>();
     		for(int ordemDaCarta = 0 ; ordemDaCarta < 5 ; ordemDaCarta++) {
-    			cartasMao.add(baralho.getCartas().get(ordemDaCarta));
-    			baralho.getCartas().remove(ordemDaCarta);
+    			cartasMao.add(baralho.getCartas().get(0));
+    			baralho.getCartas().remove(0);
     		}
     		
     		return new Mesa(new Mao(cartasMao), baralho);

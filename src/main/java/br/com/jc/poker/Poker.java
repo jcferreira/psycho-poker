@@ -28,12 +28,13 @@ public class Poker {
 		for(Mesa mesa : mesas) {
 			//imprimir(mesa);
 
+			String mensagem = "M‹o: " + mesa.getMao().getCartas() + " Monte: " + mesa.getBaralho().olharCartas(5);
 			PokerEngine engine = new PokerEngine(mesa);
 			//engine.abrirCartasNaMesa();
-			
+
 			Jogada melhorJogada = engine.jogar();
 			System.out.println("******************************************************************************** ");
-			System.out.println("M‹o: " + mesa.getMao().getCartas() + " Monte: " + mesa.getBaralho().olharCartas(5) + " Melhor Jogo: " + melhorJogada);
+			System.out.println(mensagem + " Melhor Jogo: " + melhorJogada);
 			System.out.println("******************************************************************************** \n");
 			
 			//listarTodasJogadasEncontradas(engine.listarJogadasEncontradas());
