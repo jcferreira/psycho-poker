@@ -22,8 +22,8 @@ public class LeituraDeCartas implements Serializable {
 		List<Baralho> baralhos = new ArrayList<Baralho>();
 		List<String> sequenciasCartasDigitadas = new ArrayList<String>();
 
-		sequenciasCartasDigitadas.add("TH JH QC QD QS QH KH 9H 2S 6S");
-		sequenciasCartasDigitadas.add("TH JH QC QD QS QH KH AH 2S 6S");  //Melhor Jogo: straight-flush (sequência numérica e de naipe)
+		sequenciasCartasDigitadas.add("TH JH QC QD QS QH KH AH 2S 6S");  //Melhor Jogo: royal-straight-flush (sequência numérica e de naipe)
+		sequenciasCartasDigitadas.add("TH JH QC QD QS QH KH 9H 2S 6S");  //Melhor Jogo: straight-flush (sequência numérica)
 		sequenciasCartasDigitadas.add("2H 2S 3H 3S 3C 2D 3D 6C 9C TH");  //Melhor Jogo: four-of-a-kind (quadra)  
 		sequenciasCartasDigitadas.add("2H 2S 3H 3S 3C 2D 9C 3D 6C TH");  //Melhor Jogo: full-house (trinca + par)  
 		sequenciasCartasDigitadas.add("2H AD 5H AC 7H AH 6H 9H 4H 3C");  //Melhor Jogo: flush (sequência de naipe)
