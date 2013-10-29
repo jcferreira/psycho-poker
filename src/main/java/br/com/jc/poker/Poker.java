@@ -1,5 +1,6 @@
 package br.com.jc.poker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -14,16 +15,17 @@ import br.com.jc.canonic.model.poker.Mesa;
 import br.com.jc.leituracartas.poker.LeituraDeCartas;
 
 
-public class Poker {
+public class Poker implements Serializable{
 
-	/**
-	 * @param args
-	 */
+	private static final long serialVersionUID = -2761559977331824483L;
+	
+
 	public static void main(String[] args) {
 		
-		//List<Mesa> mesas = obterBaralhoCompletoAleatorio();
-		List<Mesa> mesas = obterBaralhoPorLinhasDigitadas();
-		//List<Mesa> mesas = obterBaralhoPorArquivo();
+		List<Mesa> mesas = new ArrayList<Mesa>();
+		//mesas.addAll(obterMesasCompletoAleatorio(mesas));
+		mesas.addAll(obterBaralhoPorLinhasDigitadas(mesas));
+		//mesas.addAll(obterBaralhoPorArquivo(mesas));
 		
 		for(Mesa mesa : mesas) {
 			//imprimir(mesa);
@@ -33,9 +35,9 @@ public class Poker {
 			//engine.abrirCartasNaMesa();
 
 			Jogada melhorJogada = engine.jogar();
-			System.out.println("******************************************************************************** ");
+			System.out.println("********************************************************************************** ");
 			System.out.println(mensagem + " Melhor Jogo: " + melhorJogada);
-			System.out.println("******************************************************************************** \n");
+			System.out.println("********************************************************************************** \n");
 			
 			//listarTodasJogadasEncontradas(engine.listarJogadasEncontradas());
 		}
@@ -43,15 +45,13 @@ public class Poker {
 	}
 	
 	
-	private static List<Mesa> obterMesasCompletoAleatorio() {
-		List<Mesa> mesas = new ArrayList<Mesa>();
+	private static List<Mesa> obterMesasCompletoAleatorio(List<Mesa> mesas) {
 		Baralho baralho = new Baralho();
 		mesas.add(new Dealer.Build().embaralhar(baralho).darCartas(baralho));
 		return mesas;
 	}
 	
-	private static List<Mesa> obterBaralhoPorLinhasDigitadas() {
-		List<Mesa> mesas = new ArrayList<Mesa>();
+	private static List<Mesa> obterBaralhoPorLinhasDigitadas(List<Mesa> mesas) {
 		LeituraDeCartas leituraBaralho = new LeituraDeCartas();
 		List<Baralho> baralhos = leituraBaralho.carregarPorDigitacao();
 		for(Baralho baralho : baralhos) {
@@ -60,8 +60,7 @@ public class Poker {
 		return mesas;
 	}
 	
-	private static List<Mesa> obterBaralhoPorArquivo() {
-		List<Mesa> mesas = new ArrayList<Mesa>();
+	private static List<Mesa> obterBaralhoPorArquivo(List<Mesa> mesas) {
 		LeituraDeCartas leituraBaralho = new LeituraDeCartas();
 		List<Baralho> baralhos = leituraBaralho.carregarPorArquivo();
 		for(Baralho baralho : baralhos) {

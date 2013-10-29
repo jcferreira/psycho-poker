@@ -1,5 +1,8 @@
 package br.com.jc.leituracartas.poker;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +16,7 @@ public class LeituraDeCartas implements Serializable {
 	
 	private static final long serialVersionUID = -7759707524809449878L;
 
-	public List<Baralho> carregarPorArquivo() {
-		
-		return null;
-	}
-    
+	
 	public List<Baralho> carregarPorDigitacao() {
 		List<Baralho> baralhos = new ArrayList<Baralho>();
 		List<String> sequenciasCartasDigitadas = new ArrayList<String>();
@@ -44,5 +43,34 @@ public class LeituraDeCartas implements Serializable {
 		
 		return baralhos;
 	}
-    
+
+	
+	public List<Baralho> carregarPorArquivo() {
+		
+		List<Baralho> baralhos = new ArrayList<Baralho>();
+		List<String> sequenciasCartasDigitadas = new ArrayList<String>();
+
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("CARTAS.TXT"));  
+			String linha = "";
+			while ((linha = reader.readLine()) != null) {
+	    		sequenciasCartasDigitadas.add(linha);
+		    }  
+		    reader.close();
+		} catch(IOException ex) {
+			ex.printStackTrace();
+		}
+		
+		for(String sequencia : sequenciasCartasDigitadas) {
+			List<Carta> cartas = new ArrayList<Carta>();
+			for(String carta : sequencia.split(" ")) {
+				cartas.add(new Carta(CartaValor.fromCarta(carta), CartaNaipe.fromCarta(carta)));
+			}
+			baralhos.add(new Baralho(cartas));
+		}
+		
+		return baralhos;
+	}
+
+
 }
