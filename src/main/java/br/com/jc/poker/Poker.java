@@ -3,6 +3,7 @@ package br.com.jc.poker;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -23,9 +24,27 @@ public class Poker implements Serializable{
 	public static void main(String[] args) {
 		
 		List<Mesa> mesas = new ArrayList<Mesa>();
-		//mesas.addAll(obterMesasCompletoAleatorio(mesas));
-		mesas.addAll(obterBaralhoPorLinhasDigitadas(mesas));
-		//mesas.addAll(obterBaralhoPorArquivo(mesas));
+		int opcaoEscolhida = obterOpcaoMenu(args);
+
+		
+		switch (opcaoEscolhida) {
+			case 1:
+				obterBaralhoPorDigitacao(mesas);
+				break;
+			case 2:
+				obterBaralhoPorArquivo(mesas);
+				break;
+			case 3:
+				obterBaralhoPorLinhasDigitadasNaClasse(mesas);
+				break;
+			case 4:
+				obterMesasCompletaAleatorio(mesas);
+				break;
+			default:
+				System.out.println("  <<<<<  VALOR DIGITADO ƒ INVçLIDO  >>>>>");
+				break;
+		}
+		
 		
 		for(Mesa mesa : mesas) {
 			//imprimir(mesa);
@@ -45,15 +64,24 @@ public class Poker implements Serializable{
 	}
 	
 	
-	private static List<Mesa> obterMesasCompletoAleatorio(List<Mesa> mesas) {
+	private static List<Mesa> obterBaralhoPorDigitacao(List<Mesa> mesas) {
+		LeituraDeCartas leituraBaralho = new LeituraDeCartas();
+		List<Baralho> baralhos = leituraBaralho.carregarPorDigitacao();
+		for(Baralho baralho : baralhos) {
+			mesas.add(new Dealer.Build().darCartas(baralho));
+		}
+		return mesas;
+	}
+	
+	private static List<Mesa> obterMesasCompletaAleatorio(List<Mesa> mesas) {
 		Baralho baralho = new Baralho();
 		mesas.add(new Dealer.Build().embaralhar(baralho).darCartas(baralho));
 		return mesas;
 	}
 	
-	private static List<Mesa> obterBaralhoPorLinhasDigitadas(List<Mesa> mesas) {
+	private static List<Mesa> obterBaralhoPorLinhasDigitadasNaClasse(List<Mesa> mesas) {
 		LeituraDeCartas leituraBaralho = new LeituraDeCartas();
-		List<Baralho> baralhos = leituraBaralho.carregarPorDigitacao();
+		List<Baralho> baralhos = leituraBaralho.carregarPorDigitacaoNaClasse();
 		for(Baralho baralho : baralhos) {
 			mesas.add(new Dealer.Build().darCartas(baralho));
 		}
@@ -85,6 +113,34 @@ public class Poker implements Serializable{
 		for (Jogada jogada : listarJogadasEncontradas) {
 			System.out.println(" >>>>>>> Indice: " + jogada.getOrdemMelhorJogada() + "  -  Jogada: " + jogada);
 		}
+	}
+	
+	
+	private static int obterOpcaoMenu(String[] args) {
+		int opcao = 0;
+		
+		System.out.println("******************************************************************");
+		System.out.println("");
+		System.out.println(" Escolha um nœmero de acordo com as op›es abaixo: ");
+		System.out.println("");
+		System.out.println(" 1 - Entrada de sequncia de cartas por digita‹o");
+		System.out.println(" 2 - Leitura de sequncia de cartas por arquivo no diret—rio raiz do projeto (CARTAS.TXT)");
+		System.out.println(" 3 - Leitura de sequncia de cartas digitadas na classe java.");
+		System.out.println(" 4 - Gerar sequncia aleat—ria autom‡tica de cartas.");
+		System.out.println(" ");
+		System.out.println("******************************************************************");
+		System.out.println("");
+		System.out.println("");
+		System.out.println(" >>>>>>>>>>>>>>>>>>>> ");
+
+		Scanner entrada = new Scanner(System.in);
+        try {
+        	opcao = Integer.parseInt(entrada.nextLine()); 
+        } catch(Exception ex) {
+        	System.out.println(" <<<<<  VALOR DIGITADO INVçLIDO  >>>>>");
+        	System.exit(0);
+        }
+		return opcao; 
 	}
 
 }

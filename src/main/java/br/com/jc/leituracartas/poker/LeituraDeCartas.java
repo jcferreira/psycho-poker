@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import br.com.jc.canonic.model.poker.Baralho;
 import br.com.jc.canonic.model.poker.Carta;
@@ -18,6 +19,27 @@ public class LeituraDeCartas implements Serializable {
 
 	
 	public List<Baralho> carregarPorDigitacao() {
+		List<Baralho> baralhos = new ArrayList<Baralho>();
+
+		System.out.println("");
+		System.out.println("");
+		System.out.println(" INFORME A SEQUENCIA DE CARTAS >>  ");
+		System.out.println("");
+		System.out.println("");
+		
+		Scanner entrada = new Scanner(System.in);
+        String cartasDigitadas = entrada.nextLine(); 
+
+		List<Carta> cartas = new ArrayList<Carta>();
+		for(String carta : cartasDigitadas.split(" ")) {
+			cartas.add(new Carta(CartaValor.fromCarta(carta), CartaNaipe.fromCarta(carta)));
+		}
+		baralhos.add(new Baralho(cartas));
+		
+		return baralhos;
+	}
+
+	public List<Baralho> carregarPorDigitacaoNaClasse() {
 		List<Baralho> baralhos = new ArrayList<Baralho>();
 		List<String> sequenciasCartasDigitadas = new ArrayList<String>();
 
@@ -43,7 +65,6 @@ public class LeituraDeCartas implements Serializable {
 		
 		return baralhos;
 	}
-
 	
 	public List<Baralho> carregarPorArquivo() {
 		
